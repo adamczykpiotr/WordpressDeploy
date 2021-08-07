@@ -11,16 +11,22 @@ const WP_PATH = 'C:/xampp/htdocs/wordpress/';
 /*
  * FTP Config
  * */
-const FTP_HOST = 'ftp.host.com';
-const FTP_USER = 'username';
-const FTP_PASS = 'password';
+const FTP_DEV_HOST = 'ftp.host.com';
+const FTP_DEV_USER = 'username';
+const FTP_DEV_PASS = 'password';
+const FTP_DEV_PATH = 'public_html/www/dev';
 
+const FTP_PROD_HOST = 'ftp.host.com';
+const FTP_PROD_USER = 'username';
+const FTP_PROD_PASS = 'password';
+const FTP_PROD_PATH = 'public_html/www';
 /*
  * Remote Wordpress url
  *
  * URL has to include / character at the end
  * */
-const REMOTE_URL = 'https://example.com/';
+const REMOTE_DEV_URL = 'https://dev.example.com/';
+const REMOTE_PROD_URL = 'https://example.com/';
 
 /*
  * Array of paths to be zipped and deployed on the remote server
