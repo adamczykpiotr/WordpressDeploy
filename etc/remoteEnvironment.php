@@ -27,7 +27,7 @@ class RemoteEnvironment {
         $this->postDeployClass = $postDeployClass;
 
         echo "[Environment]\n";
-        if($argc > 2) {
+        if($argc > 1) {
             if (in_array(strtolower($argv[1]), ['prod', 'production'])) $this->environment = static::PRODUCTION;
             if (in_array(strtolower($argv[1]), ['dev', 'beta'])) $this->environment = static::DEV;
         }
