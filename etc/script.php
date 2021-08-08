@@ -18,7 +18,7 @@ class Script {
      * Generates deployment script
      */
     public function generate() {
-        echo "[Deployment script]\n";
+        echo "[Creating deployment script]\n";
         $pb = new ProgressBar(8);
 
         $fileContent = file_get_contents('template/' . SCRIPT_FILENAME);

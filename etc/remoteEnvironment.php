@@ -16,6 +16,7 @@ class RemoteEnvironment {
 
     /**
      * RemoteEnvironment constructor.
+     *
      * @param int $argc
      * @param string[] $argv
      * @param class-string $preDeployClass
@@ -66,7 +67,7 @@ class RemoteEnvironment {
      * Uploads files
      */
     public function upload() {
-        echo "[Upload]\n";
+        echo "[Uploading files]\n";
         $pb = new ProgressBar(4);
 
         $upload = new Upload($this->environment === static::PRODUCTION);
@@ -88,7 +89,7 @@ class RemoteEnvironment {
      * Runs deployment script on remote server
      */
     public function deploy() {
-        echo "[Deploy script]\n";
+        echo "[Executing deployment script]\n";
         $pb = new ProgressBar(4);
 
         $url = $this->environment === static::PRODUCTION ? REMOTE_PROD_URL : REMOTE_DEV_URL;
