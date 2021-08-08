@@ -9,25 +9,28 @@ class RemoteEnvironment {
     const DEV = 0;
     const PRODUCTION = 1;
 
-    protected $environment;
+    protected $environment = null;
     protected $start = 0;
+    protected $preDeployClass = null;
+    protected $postDeployClass = null;
 
     /**
      * RemoteEnvironment constructor.
      * @param int $argc
      * @param string[] $argv
+     * @param class-string $preDeployClass
+     * @param class-string $postDeployClass
      */
-    public function __construct($argc, $argv) {
+    public function __construct($argc, $argv, $preDeployClass, $postDeployClass) {
         $this->start = microtime(true);
+        $this->preDeployClass = $preDeployClass;
+        $this->postDeployClass = $postDeployClass;
 
         echo "[Environment]\n";
-        if($argc < 2) {
-            echo "No environment specified, DEV assumed.\n";
-            return $this->environment = static::DEV;
+        if($argc > 2) {
+            if (in_array(strtolower($argv[1]), ['prod', 'production'])) $this->environment = static::PRODUCTION;
+            if (in_array(strtolower($argv[1]), ['dev', 'beta'])) $this->environment = static::DEV;
         }
-
-        if( in_array(strtolower($argv[1]), ['prod', 'production'])) $this->environment = static::PRODUCTION;
-        if( in_array(strtolower($argv[1]), ['dev', 'beta'])) $this->environment = static::DEV;
 
         if($this->environment === static::PRODUCTION) {
             echo "Deploying on PRODUCTION environment. Continue? [y/n]: ";
@@ -35,7 +38,28 @@ class RemoteEnvironment {
             if( strtolower($decision) !== 'y' ) die('Exiting...');
         }
 
+        if($this->environment === null) {
+            echo "No environment specified, DEV assumed.\n";
+            $this->environment = static::DEV;
+        }
+
         return $this->environment;
+    }
+
+    /**
+     * Triggers pre-deploy action(s) for specific environment
+     */
+    public function preDeploy() {
+        if($this->preDeployClass === null) return;
+        new $this->preDeployClass($this->environment);
+    }
+
+    /**
+     * Triggers post-deploy action(s) for specific environment
+     */
+    public function postDeploy() {
+        if($this->postDeployClass === null) return;
+        new $this->postDeployClass($this->environment);
     }
 
     /**
@@ -48,7 +72,7 @@ class RemoteEnvironment {
         $upload = new Upload($this->environment === static::PRODUCTION);
         $pb->tick();
 
-        $upload->setDirectory( $this->environment === self::PRODUCTION ? FTP_PROD_PATH : FTP_DEV_PATH );
+        $upload->setDirectory( $this->environment === static::PRODUCTION ? FTP_PROD_PATH : FTP_DEV_PATH );
         $pb->tick();
 
         //upload archive
@@ -84,5 +108,6 @@ class RemoteEnvironment {
         $totalTime = number_format(microtime(true) - $this->start, 1);
         echo "\n";
         echo "Deployment successfully finished at {$now->format('Y-m-d h:i:s')} in $totalTime seconds\n";
+        echo "\n";
     }
 }

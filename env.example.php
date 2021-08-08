@@ -32,11 +32,12 @@ const REMOTE_PROD_URL = 'https://example.com/';
  * Array of paths to be zipped and deployed on the remote server
  * */
 const PATHS = [
-    'wp-content/plugins/custom-plugin/',        //plugin
+    'wp-content/plugins/custom-plugin/',                    //plugin
 
-    'wp-content/themes/custom-theme/dist',      //sage theme
-    'wp-content/themes/custom-theme/resources', //sage theme
-    'wp-content/themes/custom-theme/app',       //sage theme
+    'wp-content/themes/custom-theme/dist',                  //dist
+    'wp-content/themes/custom-theme/resources',             //resources
+    'wp-content/themes/custom-theme/app',                   //app
+    'wp-content/themes/custom-theme/lang/custom-theme.pot', //language template
 ];
 
 /*

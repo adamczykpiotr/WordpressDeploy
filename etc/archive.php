@@ -12,8 +12,15 @@ class Archive {
      */
     public function process() {
         foreach(PATHS as $path) {
+            $fullPath = WP_PATH . $path;
+
+            if( is_file($fullPath) ) {
+                $this->paths = array_merge($this->paths, [$fullPath]);
+                continue;
+            }
+
             $files = new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator(WP_PATH . $path, FilesystemIterator::KEY_AS_FILENAME),
+                new RecursiveDirectoryIterator($fullPath, FilesystemIterator::KEY_AS_FILENAME),
                 RecursiveIteratorIterator::SELF_FIRST
             );
 
