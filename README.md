@@ -9,9 +9,7 @@ Development environment: ```php deploy.php dev``` or ```php deploy.php beta```\
 Production environment: ```php deploy.php prod ``` or ```php deploy.php production ```
 
 
-
-## Output:
-
+### Console output:
 ```
 F:\WordpressDeploy>php deploy.php
 [Environment]
@@ -33,5 +31,12 @@ Deployment successfully finished at 2021-08-08 12:22:20 in 15.6 seconds
 [===============================] 100%  1/1 remaining: 0 sec.  elapsed: 0 sec.
 
 F:\WordpressDeploy>
+```
 
+### Additional confirmation is required while deploying on production
+```
+F:\WordpressDeploy>php deploy.php prod
+[Environment]
+Deploying on PRODUCTION environment. Continue? [y/n]: y
+...
 ```
