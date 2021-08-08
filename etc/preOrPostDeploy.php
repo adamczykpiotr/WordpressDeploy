@@ -12,7 +12,7 @@ abstract class PreOrPostDeploy {
     protected $os = self::OS_WIN;
 
     public function __construct($environment) {
-        echo self::PRE_DEPLOY
+        echo static::PRE_DEPLOY
             ? "[Pre-deploy actions]\n"
             : "[Post-deploy actions]\n";
         $this->detectOS();
