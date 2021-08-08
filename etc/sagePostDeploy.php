@@ -12,7 +12,7 @@ class SagePostDeploy extends PreOrPostDeploy {
         $pb = new ProgressBar(1);
 
         //build theme for production
-        $result = $this->exec('yarn build:brave-dev', 'wp-content/themes/custom-theme' );
+        $result = $this->exec('yarn build:brave-dev', 'wp-content/themes/mrshuttle-theme' );
         if($result->code !== 0) die("Failed to re-build theme! (Return code: expected 0, got $result)");
         $pb->finish();
     }
@@ -24,7 +24,7 @@ class SagePostDeploy extends PreOrPostDeploy {
         $pb = new ProgressBar(1);
 
         //build theme for production
-        $result = $this->exec('yarn build:brave-dev', 'wp-content/themes/custom-theme' );
+        $result = $this->exec('yarn build:brave-dev', 'wp-content/themes/mrshuttle-theme' );
         if($result->code !== 0) die("Failed to re-build theme! (Return code: expected 0, got $result)");
         $pb->finish();
     }

@@ -10,7 +10,7 @@ class SagePreDeploy extends PreOrPostDeploy {
         $pb = new ProgressBar(2);
 
         //build theme for production
-        $result = $this->exec('yarn build:production', 'wp-content/themes/custom-theme' );
+        $result = $this->exec('yarn build:production', 'wp-content/themes/mrshuttle-theme' );
         if($result->code !== 0) die("Failed to build theme! (Return code: expected 0, got $result)");
         $pb->tick();
 
@@ -19,7 +19,7 @@ class SagePreDeploy extends PreOrPostDeploy {
             $this->os === static::OS_WIN
                 ? 'yarn pot:win'
                 : 'yarn pot',
-            'wp-content/themes/custom-theme' );
+            'wp-content/themes/mrshuttle-theme' );
         if($result->code !== 0) die("Failed to generate translation file! (Return code: expected 0, got $result)");
         $pb->finish();
     }
@@ -31,7 +31,7 @@ class SagePreDeploy extends PreOrPostDeploy {
         $pb = new ProgressBar(2);
 
         //build theme for production
-        $result = $this->exec('yarn build', 'wp-content/themes/custom-theme' );
+        $result = $this->exec('yarn build', 'wp-content/themes/mrshuttle-theme' );
         if($result->code !== 0) die("Failed to build theme! (Return code: expected 0, got $result)");
         $pb->tick();
 
@@ -40,7 +40,7 @@ class SagePreDeploy extends PreOrPostDeploy {
             $this->os === static::OS_WIN
                 ? 'yarn pot:win'
                 : 'yarn pot',
-            'wp-content/themes/custom-theme' );
+            'wp-content/themes/mrshuttle-theme' );
         if($result->code !== 0) die("Failed to generate translation file! (Return code: expected 0, got $result)");
         $pb->finish();
     }
