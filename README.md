@@ -1,0 +1,37 @@
+# WordpressDeploy
+Deploys Wordpress local file changes on remote server.\
+Supports both development & production environments.
+
+## Usage:
+
+Default (dev) environment: ```php deploy.php```\
+Development environment: ```php deploy.php dev``` or ```php deploy.php beta```\
+Production environment: ```php deploy.php prod ``` or ```php deploy.php production ```
+
+
+
+## Output:
+
+```
+F:\WordpressDeploy>php deploy.php
+[Environment]
+No environment specified, DEV assumed.
+[Pre-deploy actions]
+[===============================] 100%  2/2 remaining: 0 sec.  elapsed: 1 sec.
+[Creating archive]
+[===============================] 100%  1030/1030 remaining: 0 sec.  elapsed: 2 sec.
+[Deployment script]
+[===============================] 100%  8/8 remaining: 0 sec.  elapsed: 0 sec.
+[Upload]
+[===============================] 100%  4/4 remaining: 0 sec.  elapsed: 7 sec.
+[Deploy script]
+[===============================] 100%  4/4 remaining: 0 sec.  elapsed: 0 sec.
+
+Deployment successfully finished at 2021-08-08 12:22:20 in 15.6 seconds
+
+[Post-deploy actions]
+[===============================] 100%  1/1 remaining: 0 sec.  elapsed: 0 sec.
+
+F:\WordpressDeploy>
+
+```
