@@ -18,14 +18,14 @@ No environment specified, DEV assumed.
 [===============================] 100%  2/2 remaining: 0 sec.  elapsed: 1 sec.
 [Creating archive]
 [===============================] 100%  1030/1030 remaining: 0 sec.  elapsed: 2 sec.
-[Deployment script]
+[Creating deployment script]
 [===============================] 100%  8/8 remaining: 0 sec.  elapsed: 0 sec.
-[Upload]
+[Uploading files]
 [===============================] 100%  4/4 remaining: 0 sec.  elapsed: 7 sec.
-[Deploy script]
+[Executing deployment script]
 [===============================] 100%  4/4 remaining: 0 sec.  elapsed: 0 sec.
 
-Deployment successfully finished at 2021-08-08 12:22:20 in 15.6 seconds
+Deployment successfully finished at 2021-08-08 12:34:36 in 15.4 seconds
 
 [Post-deploy actions]
 [===============================] 100%  1/1 remaining: 0 sec.  elapsed: 0 sec.
