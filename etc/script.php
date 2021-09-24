@@ -19,7 +19,7 @@ class Script {
      */
     public function generate() {
         echo "[Creating deployment script]\n";
-        $pb = new ProgressBar(8);
+        $pb = new ProgressBar(10);
 
         $fileContent = file_get_contents('template/' . SCRIPT_FILENAME);
         $pb->tick();
@@ -30,6 +30,10 @@ class Script {
 
         //update script name
         $fileContent = str_replace('%%SCRIPT%%', SCRIPT_FILENAME, $fileContent);
+        $pb->tick();
+
+        //update placeholder index name
+        $fileContent = str_replace('%%INDEX%%', INDEX_FILENAME, $fileContent);
         $pb->tick();
 
         //update generated md5 from archive
@@ -51,6 +55,18 @@ class Script {
         $pb->tick();*/
 
         file_put_contents('temp/' . SCRIPT_FILENAME, $fileContent);
+        $pb->finish();
+    }
+
+    /**
+     * Adds placeholder index.php file for minimizing deployment effects
+     */
+    public function addPlaceholderIndex() {
+        echo "[Creating placeholder index.php]\n";
+        $pb = new ProgressBar(1);
+
+        copy('template/index.php', 'temp/' . INDEX_FILENAME);
+
         $pb->finish();
     }
 };

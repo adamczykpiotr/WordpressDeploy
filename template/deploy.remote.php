@@ -3,6 +3,7 @@
 const HASH = '%%MD5%%';
 const SCRIPT = '%%SCRIPT%%';
 const ARCHIVE = '%%ARCHIVE%%';
+const INDEX = '%%INDEX%%';
 CONST DATETIME = '%%DATETIME%%';
 CONST ARCHIVED_PATHS = '%%ARCHIVED_PATHS%%';
 CONST REQUESTED_PATHS = '%%REQUESTED_PATHS%%';
@@ -19,8 +20,10 @@ class WordpressRemoteDeploy {
             $this->response('INVALID FILE HASH', false);
         }
 
+        $this->replaceIndex();
+
         //prepare data for class methods
-        $this->paths = unserialize(PATHS_JSON);
+        $this->paths = [];//unserialize(PATHS_JSON);
 
         //extract archive
         $this->unzip();
@@ -28,12 +31,15 @@ class WordpressRemoteDeploy {
 
         //TODO: Delete all files in requested directories that were not modified by zip
 
+        $this->restoreIndex();
+
         //save last deployment creation date
         @file_put_contents('.lastdeploy', DATETIME);
 
         //delete archive file & deployment script
         @unlink(ARCHIVE);
         @unlink(SCRIPT);
+        @unlink(INDEX);
 
         $this->response('Success');
     }
@@ -56,6 +62,22 @@ class WordpressRemoteDeploy {
         foreach($this->paths as $path) {
             chmod($path, $level);
         }
+    }
+
+    /**
+     * Replaces index.php with prepared placeholder
+     */
+    protected function replaceIndex() {
+        copy('index.php', 'index.bak.php');
+        rename(INDEX, 'index.php');
+    }
+
+    /**
+     * Restores original index.php
+     */
+    protected function restoreIndex() {
+        @unlink('index.php');
+        rename('index.bak.php', 'index.php');
     }
 
     /**
