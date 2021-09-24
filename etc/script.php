@@ -46,11 +46,19 @@ class Script {
         $fileContent = str_replace('%%DATETIME%%', $now->format(DATE_ATOM), $fileContent);
         $pb->tick();
 
-        /*//update found file list
-        $fileContent = str_replace('%%PATHS_JSON%%', serialize($this->paths), $fileContent);
+        //update found file list
+        $fileContent = str_replace('%%ARCHIVED_PATHS%%', serialize($this->paths), $fileContent);
         $pb->tick();
 
-        //update requested file list
+        //update pre-deploy cache list
+        $fileContent = str_replace('%%PRE_CACHE%%', serialize(PRE_CACHE), $fileContent);
+        $pb->tick();
+
+        //update post-deploy cache list
+        $fileContent = str_replace('%%POST_CACHE%%', serialize(POST_CACHE), $fileContent);
+        $pb->tick();
+
+        /*//update requested file list
         $fileContent = str_replace('%%REQUESTED_PATHS%%', serialize(PATHS), $fileContent);
         $pb->tick();*/
 
