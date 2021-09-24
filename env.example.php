@@ -51,9 +51,17 @@ const FORBIDDEN = [
     'custom-plugin\languages'
 ];
 
+
 /*
- * Array of cache paths - directories/files to be deleted on remote server after deploy
+ * Array of paths to be deleted on remote server before unzipping
  * */
-const CACHE = [
+const PRE_CACHE = [
+    'wp-content/themes/sample-theme/dist',
+];
+
+/*
+ * Array of cache paths to be deleted on remote server after deploy
+ * */
+const POST_CACHE = [
     'wp-content/uploads/cache',
 ];
