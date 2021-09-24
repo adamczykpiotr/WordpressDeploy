@@ -8,8 +8,9 @@ class RemoteEnvironment {
 
     const DEV = 0;
     const PRODUCTION = 1;
+    const UNKNOWN = 2;
 
-    protected $environment = null;
+    protected $environment = self::UNKNOWN;
     protected $start = 0;
     protected $preDeployClass = null;
     protected $postDeployClass = null;
@@ -33,15 +34,28 @@ class RemoteEnvironment {
             if (in_array(strtolower($argv[1]), ['dev', 'beta'])) $this->environment = static::DEV;
         }
 
-        if($this->environment === static::PRODUCTION) {
-            echo "Deploying on PRODUCTION environment. Continue? [y/n]: ";
-            $decision = readline();
-            if( strtolower($decision) !== 'y' ) die('Exiting...');
-        }
+        switch($this->environment ?? -1) {
+            case static::PRODUCTION:
+            {
+                echo "Deploying on PRODUCTION environment. Continue? [y/n]: ";
+                $decision = readline();
+                if (strtolower($decision) !== 'y') die('Exiting...');
+                break;
+            }
 
-        if($this->environment === null) {
-            echo "No environment specified, DEV assumed.\n";
-            $this->environment = static::DEV;
+            case static::DEV:
+            {
+                echo "Deploying on DEV environment.\n";
+                break;
+            }
+
+            case static::UNKNOWN:
+            default:
+            {
+                echo "No environment specified, DEV assumed.\n";
+                $this->environment = static::DEV;
+                break;
+            }
         }
 
         return $this->environment;
@@ -68,7 +82,9 @@ class RemoteEnvironment {
      */
     public function upload() {
         echo "[Uploading files]\n";
-        $pb = new ProgressBar(4);
+        $hasPlaceholderIndex = file_exists('temp/' . INDEX_FILENAME);
+
+        $pb = new ProgressBar($hasPlaceholderIndex ? 5 : 4);
 
         $upload = new Upload($this->environment === static::PRODUCTION);
         $pb->tick();
@@ -82,6 +98,13 @@ class RemoteEnvironment {
 
         //upload script
         $upload->file('temp/' . SCRIPT_FILENAME, SCRIPT_FILENAME);
+        $pb->tick();
+
+        //upload placeholder index php if exists
+        if( $hasPlaceholderIndex ) {
+            $upload->file('temp/' . INDEX_FILENAME, INDEX_FILENAME);
+        }
+
         $pb->finish();
     }
 
@@ -90,7 +113,7 @@ class RemoteEnvironment {
      */
     public function deploy() {
         echo "[Executing deployment script]\n";
-        $pb = new ProgressBar(4);
+        $pb = new ProgressBar(2);
 
         $url = $this->environment === static::PRODUCTION ? REMOTE_PROD_URL : REMOTE_DEV_URL;
         $url .= '/' . SCRIPT_FILENAME;
@@ -108,7 +131,7 @@ class RemoteEnvironment {
         $now = new DateTime();
         $totalTime = number_format(microtime(true) - $this->start, 1);
         echo "\n";
-        echo "Deployment successfully finished at {$now->format('Y-m-d h:i:s')} in $totalTime seconds\n";
+        echo "Deployment successfully finished at {$now->format('Y-m-d H:i:s')} in $totalTime seconds\n";
         echo "\n";
     }
 }

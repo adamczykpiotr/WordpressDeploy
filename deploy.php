@@ -18,6 +18,7 @@ $archive->createArchive();
 //create deployment script
 $script = new Script( $archive->getCleanPaths() );
 $script->generate();
+$script->addPlaceholderIndex();
 
 //upload files to specific remote
 $remote->upload();
